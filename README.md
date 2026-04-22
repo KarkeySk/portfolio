@@ -1,144 +1,86 @@
-# 🚀 Premium Developer Portfolio
+# Premium Developer Portfolio
 
-A high-end, modern portfolio website built with **React**, **Tailwind CSS**, **Framer Motion**, and **Supabase**.
+A modern portfolio website built with React, Tailwind CSS, Framer Motion, and Supabase.
 
-![React](https://img.shields.io/badge/React-18-61dafb?style=flat-square&logo=react)
-![Tailwind](https://img.shields.io/badge/Tailwind_CSS-3-38bdf8?style=flat-square&logo=tailwindcss)
-![Vite](https://img.shields.io/badge/Vite-5-646cff?style=flat-square&logo=vite)
-![Supabase](https://img.shields.io/badge/Supabase-✓-3fcf8e?style=flat-square&logo=supabase)
+## Features
 
----
+- Responsive portfolio layout with animated sections
+- Pricing flow with eSewa payment helpers
+- Contact form integration backed by Supabase
+- Reusable UI components and Tailwind styling
+- Vite-powered development and production builds
 
-## ✨ Features
+## Project Structure
 
-- 🎨 **Premium Dark Theme** — Glassmorphism, gradient accents, ambient lighting
-- 🎬 **Smooth Animations** — Framer Motion stagger, spring, and scroll-triggered effects
-- 📱 **Fully Responsive** — Mobile-first design that works beautifully on all devices
-- 📧 **Contact Form → Supabase** — Messages stored in PostgreSQL via Supabase
-- 💬 **Lead Capture Flow** — Pricing tiers route visitors into a tailored contact inquiry
-- 🔒 **Row Level Security** — Supabase RLS policies for secure data access
-- ⚡ **Blazing Fast** — Vite dev server with HMR, optimized production builds
-- 🧱 **Clean Architecture** — Reusable components, proper separation of concerns
-
-## 📂 Project Structure
-
-```
+```text
 portfolio/
-├── public/
-│   └── vite.svg
-├── src/
-│   ├── components/
-│   │   ├── ui/                  # Reusable UI primitives
-│   │   │   ├── AnimatedSection.jsx
-│   │   │   ├── GlassCard.jsx
-│   │   │   ├── GradientButton.jsx
-│   │   │   └── SectionHeading.jsx
-│   │   ├── Navbar.jsx
-│   │   ├── Hero.jsx
-│   │   ├── About.jsx
-│   │   ├── Skills.jsx
-│   │   ├── Projects.jsx
-│   │   ├── Services.jsx
-│   │   ├── Pricing.jsx
-│   │   ├── Contact.jsx
-│   │   └── Footer.jsx
-│   ├── lib/
-│   │   ├── supabase.js          # Supabase client & helpers
-│   │   └── supabase.js          # Supabase client & contact form helper
-│   ├── App.jsx
-│   ├── main.jsx
-│   └── index.css                # Tailwind + custom styles
-├── .env.example
-├── supabase-schema.sql
-├── tailwind.config.js
-├── postcss.config.js
-├── vite.config.js
-├── package.json
-└── README.md
+|-- public/
+|   `-- vite.svg
+|-- src/
+|   |-- components/
+|   |   |-- ui/
+|   |   |-- About.jsx
+|   |   |-- Contact.jsx
+|   |   |-- Footer.jsx
+|   |   |-- Hero.jsx
+|   |   |-- Navbar.jsx
+|   |   |-- PaymentStatusBanner.jsx
+|   |   |-- Pricing.jsx
+|   |   |-- Projects.jsx
+|   |   |-- Services.jsx
+|   |   `-- Skills.jsx
+|   |-- lib/
+|   |   |-- esewa.js
+|   |   `-- supabase.js
+|   |-- App.jsx
+|   |-- index.css
+|   `-- main.jsx
+|-- .env.example
+|-- supabase-schema.sql
+|-- package.json
+`-- README.md
 ```
 
----
+## Setup
 
-## 🛠️ Setup Guide
-
-### 1. Install Dependencies
+1. Install dependencies:
 
 ```bash
 npm install
 ```
 
-### 2. Environment Variables
-
-Copy the example env file and fill in your credentials:
+2. Copy the environment template:
 
 ```bash
 cp .env.example .env
 ```
 
-Edit `.env` with your actual keys:
+3. Fill in your Supabase values in `.env`:
 
 ```env
 VITE_SUPABASE_URL=https://your-project.supabase.co
 VITE_SUPABASE_ANON_KEY=your-anon-key
 ```
 
-### 3. Supabase Setup
+4. Run the SQL in `supabase-schema.sql` inside your Supabase project.
 
-1. Create a new project at [supabase.com](https://supabase.com)
-2. Go to **SQL Editor** in your Supabase dashboard
-3. Paste and run the contents of `supabase-schema.sql`
-4. Copy your project URL and anon key from **Settings → API**
-
-### 5. Run Development Server
+5. Start the development server:
 
 ```bash
 npm run dev
 ```
 
-Your portfolio will be available at `http://localhost:5173`.
-
-### 6. Build for Production
+6. Build for production:
 
 ```bash
 npm run build
-npm run preview  # Preview the production build locally
 ```
 
----
+## Tech Stack
 
-## 🎨 Customization
-
-### Personalize Content
-
-- **Hero section** → `src/components/Hero.jsx`
-- **About / Bio** → `src/components/About.jsx`
-- **Skills** → `src/components/Skills.jsx`
-- **Projects** → `src/components/Projects.jsx`
-- **Services** → `src/components/Services.jsx`
-- **Pricing** → `src/components/Pricing.jsx`
-- **Contact info** → `src/components/Contact.jsx`
-- **Social links** → `Hero.jsx`, `Footer.jsx`
-
-### Modify Theme
-
-Edit `tailwind.config.js` to change colors, fonts, and animations.
-
----
-
-## 📦 Tech Stack
-
-| Technology | Purpose |
-|---|---|
-| React 18 | UI framework |
-| Vite 5 | Build tool & dev server |
-| Tailwind CSS 3 | Utility-first styling |
-| Framer Motion | Animations & transitions |
-| Supabase | Backend (PostgreSQL + Auth) |
-| Supabase | Contact form backend |
-| Lucide React | Icon library |
-
----
-
-## 📝 License
-
-MIT — free to use for personal and commercial projects.
+- React 18
+- Vite 5
+- Tailwind CSS 3
+- Framer Motion
+- Supabase
+- Lucide React
