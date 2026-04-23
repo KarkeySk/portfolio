@@ -22,7 +22,7 @@ export default function Hero() {
             className="absolute inset-0 bg-cover bg-center opacity-55 grayscale"
             style={{
               backgroundImage:
-                "url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=900&h=900&fit=crop&crop=faces')",
+                "url('12.jpg')",
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#06131d] via-[#06131d]/35 to-[#06131d]/10" />
