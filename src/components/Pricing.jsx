@@ -8,8 +8,8 @@ const plans = [
   {
     name: 'Starter',
     icon: Zap,
-    price: '$499',
-    amount: 499,
+    price: 'NPR75,104',
+    amount: 'NPR 75,104',
     period: 'one-time',
     description: 'Perfect for personal projects and small businesses getting started.',
     gradient: 'from-cyan-500 to-sky-400',
@@ -27,8 +27,8 @@ const plans = [
   {
     name: 'Professional',
     icon: Crown,
-    price: '$1,499',
-    amount: 1499,
+    price: 'NPR 225,613',
+    amount: 'NPR 225,613',
     period: 'one-time',
     description: 'Ideal for growing businesses needing advanced features and integrations.',
     gradient: 'from-cyan-400 to-blue-500',
@@ -49,8 +49,8 @@ const plans = [
   {
     name: 'Enterprise',
     icon: Rocket,
-    price: '$3,999',
-    amount: 3999,
+    price: 'NPR 601,887',
+    amount: 'NPR 601,887',
     period: 'one-time',
     description: 'For large-scale applications requiring custom architecture and ongoing support.',
     gradient: 'from-blue-500 to-cyan-300',
