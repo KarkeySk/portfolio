@@ -58,3 +58,107 @@ CREATE OR REPLACE VIEW unread_message_count AS
   SELECT COUNT(*) AS count
   FROM contact_messages
   WHERE is_read = FALSE;
+
+-- ========================================================
+-- PAYMENT TRANSACTIONS TABLE
+-- Stores eSewa payment attempts and verified completions.
+-- For production, verify and update completed payments from
+-- a backend or Supabase Edge Function instead of the browser.
+-- ========================================================
+
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'payment_status') THEN
+    CREATE TYPE payment_status AS ENUM (
+      'PENDING',
+      'COMPLETE',
+      'FULL_REFUND',
+      'PARTIAL_REFUND',
+      'AMBIGUOUS',
+      'CANCELED',
+      'NOT_FOUND',
+      'FAILED'
+    );
+  END IF;
+END $$;
+
+CREATE TABLE IF NOT EXISTS payment_transactions (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  plan_name TEXT,
+  customer_name TEXT,
+  customer_email TEXT,
+  customer_phone TEXT,
+  transaction_uuid TEXT NOT NULL UNIQUE,
+  product_code TEXT NOT NULL,
+  amount NUMERIC(12, 2) NOT NULL,
+  tax_amount NUMERIC(12, 2) DEFAULT 0,
+  total_amount NUMERIC(12, 2) NOT NULL,
+  product_service_charge NUMERIC(12, 2) DEFAULT 0,
+  product_delivery_charge NUMERIC(12, 2) DEFAULT 0,
+  status payment_status NOT NULL DEFAULT 'PENDING',
+  transaction_code TEXT,
+  ref_id TEXT,
+  signed_field_names TEXT,
+  signature TEXT,
+  raw_response JSONB,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  verified_at TIMESTAMPTZ
+);
+
+CREATE INDEX IF NOT EXISTS idx_payment_transactions_status
+  ON payment_transactions (status);
+
+CREATE INDEX IF NOT EXISTS idx_payment_transactions_created_at
+  ON payment_transactions (created_at DESC);
+
+CREATE INDEX IF NOT EXISTS idx_payment_transactions_customer_email
+  ON payment_transactions (customer_email);
+
+CREATE OR REPLACE FUNCTION update_payment_transactions_updated_at()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  NEW.updated_at = NOW();
+  RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS payment_transactions_updated_at
+  ON payment_transactions;
+
+CREATE TRIGGER payment_transactions_updated_at
+BEFORE UPDATE ON payment_transactions
+FOR EACH ROW
+EXECUTE FUNCTION update_payment_transactions_updated_at();
+
+ALTER TABLE payment_transactions ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Allow anonymous payment inserts"
+  ON payment_transactions;
+
+CREATE POLICY "Allow anonymous payment inserts"
+  ON payment_transactions
+  FOR INSERT
+  TO anon
+  WITH CHECK (status = 'PENDING');
+
+DROP POLICY IF EXISTS "Allow anonymous payment completion updates"
+  ON payment_transactions;
+
+CREATE POLICY "Allow anonymous payment completion updates"
+  ON payment_transactions
+  FOR UPDATE
+  TO anon
+  USING (status = 'PENDING')
+  WITH CHECK (status = 'COMPLETE');
+
+DROP POLICY IF EXISTS "Allow authenticated payment reads"
+  ON payment_transactions;
+
+CREATE POLICY "Allow authenticated payment reads"
+  ON payment_transactions
+  FOR SELECT
+  TO authenticated
+  USING (true);

@@ -3,7 +3,8 @@ import { motion } from 'framer-motion';
 import { Send, Mail, MapPin, Phone, CheckCircle } from 'lucide-react';
 import SectionHeading from './ui/SectionHeading';
 import AnimatedSection, { fadeUp } from './ui/AnimatedSection';
-import { submitContactMessage } from '../lib/supabase';
+import { createPaymentTransaction, submitContactMessage } from '../lib/supabase';
+import { createEsewaPaymentPayload, submitEsewaPayment } from '../lib/esewa';
 
 const contactInfo = [
   { icon: Mail, label: 'Email', value: 'Swornim.karki300@gmail.com', href: 'mailto:Swornim.karki300@gmail.com' },
@@ -15,11 +16,13 @@ export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     subject: '',
     message: '',
   });
   const [status, setStatus] = useState('idle'); // 'idle' | 'sending' | 'success' | 'error'
   const [errorMsg, setErrorMsg] = useState('');
+  const [selectedPlan, setSelectedPlan] = useState(null);
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -29,15 +32,22 @@ export default function Contact() {
     const handlePlanSelect = (event) => {
       const planName = event.detail?.name;
       const planPrice = event.detail?.price;
+      const planAmount = event.detail?.amount;
 
-      if (!planName) {
+      if (!planName || !planAmount) {
         return;
       }
+
+      setSelectedPlan({
+        name: planName,
+        price: planPrice,
+        amount: planAmount,
+      });
 
       setFormData((prev) => ({
         ...prev,
         subject: `${planName} Package Inquiry`,
-        message: prev.message || `Hi, I'm interested in the ${planName} package (${planPrice}). Please share the next steps.`,
+        message: `Hi, I'm interested in the ${planName} package (${planPrice}). I want to fill this form and continue to eSewa payment.`,
       }));
     };
 
@@ -55,8 +65,28 @@ export default function Contact() {
 
     try {
       await submitContactMessage(formData);
+
+      if (selectedPlan) {
+        const payload = await createEsewaPaymentPayload(selectedPlan);
+        await createPaymentTransaction({
+          planName: selectedPlan.name,
+          customerName: formData.name,
+          customerEmail: formData.email,
+          customerPhone: formData.phone,
+          transactionUuid: payload.transaction_uuid,
+          productCode: payload.product_code,
+          amount: Number(payload.amount),
+          taxAmount: Number(payload.tax_amount),
+          totalAmount: Number(payload.total_amount),
+          productServiceCharge: Number(payload.product_service_charge),
+          productDeliveryCharge: Number(payload.product_delivery_charge),
+        });
+        submitEsewaPayment(payload);
+        return;
+      }
+
       setStatus('success');
-      setFormData({ name: '', email: '', subject: '', message: '' });
+      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
       setTimeout(() => setStatus('idle'), 5000);
     } catch (err) {
       console.error('Contact form error:', err);
@@ -74,7 +104,7 @@ export default function Contact() {
         <SectionHeading
           label="Get In Touch"
           title="Let's Work Together"
-          description="Have a project in mind? I'd love to hear about it. Send me a message and I'll get back within 24 hours."
+          description="Choose a package, fill this form, and after submitting you will be redirected to eSewa to pay."
         />
 
         <div className="grid lg:grid-cols-5 gap-10 lg:gap-16 max-w-6xl mx-auto">
@@ -112,7 +142,14 @@ export default function Contact() {
           {/* Contact Form */}
           <motion.div variants={fadeUp} className="lg:col-span-3">
             <form onSubmit={handleSubmit} className="glass-card p-6 lg:p-8 space-y-5">
-              <div className="grid sm:grid-cols-2 gap-5">
+              {selectedPlan && (
+                <div className="rounded-2xl border border-cyan-500/20 bg-cyan-500/10 p-4 text-sm text-cyan-100">
+                  Selected package: <span className="font-semibold">{selectedPlan.name}</span> ({selectedPlan.price}).
+                  Submit this form to continue to eSewa payment.
+                </div>
+              )}
+
+              <div className="grid sm:grid-cols-3 gap-5">
                 <div>
                   <label htmlFor="contact-name" className="block text-sm font-medium text-gray-300 mb-2">
                     Full Name
@@ -143,6 +180,24 @@ export default function Contact() {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="john@example.com"
+                    className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08]
+                             rounded-xl text-white placeholder-gray-500
+                             focus:outline-none focus:border-accent-500/50 focus:ring-2 focus:ring-accent-500/20
+                             transition-all duration-300"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="contact-phone" className="block text-sm font-medium text-gray-300 mb-2">
+                    Phone Number
+                  </label>
+                  <input
+                    id="contact-phone"
+                    name="phone"
+                    type="tel"
+                    required={Boolean(selectedPlan)}
+                    value={formData.phone}
+                    onChange={handleChange}
+                    placeholder="+977 98XXXXXXXX"
                     className="w-full px-4 py-3 bg-white/[0.04] border border-white/[0.08]
                              rounded-xl text-white placeholder-gray-500
                              focus:outline-none focus:border-accent-500/50 focus:ring-2 focus:ring-accent-500/20
@@ -197,7 +252,9 @@ export default function Contact() {
                   className="flex items-center gap-2 p-4 rounded-xl bg-green-500/10 border border-green-500/20"
                 >
                   <CheckCircle className="w-5 h-5 text-green-400" />
-                  <span className="text-sm text-green-300">Message sent successfully! I'll get back to you soon.</span>
+                  <span className="text-sm text-green-300">
+                    Message sent successfully! I will contact you with the payment details for your selected package.
+                  </span>
                 </motion.div>
               )}
               {status === 'error' && (
@@ -227,12 +284,12 @@ export default function Contact() {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                     </svg>
-                    Sending...
+                    {selectedPlan ? 'Opening eSewa...' : 'Sending...'}
                   </>
                 ) : (
                   <>
                     <Send className="w-5 h-5" />
-                    Send Message
+                    {selectedPlan ? 'Submit and Pay with eSewa' : 'Submit Inquiry'}
                   </>
                 )}
               </motion.button>

@@ -2,9 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ═══════════════════════════════════════════════════════
-   PREMIUM PORTFOLIO — GLOBAL STYLES
-   ═══════════════════════════════════════════════════════ */
+/* Portfolio global styles */
 
 @layer base {
   * {
@@ -13,91 +11,94 @@
 
   body {
     @apply bg-dark-950 text-gray-100 font-sans overflow-x-hidden;
+    min-height: 100vh;
     background-image:
-      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(124, 58, 237, 0.12), transparent),
-      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(236, 72, 153, 0.06), transparent);
+      radial-gradient(ellipse 70% 45% at 50% 105%, rgba(0, 194, 255, 0.35), transparent 55%),
+      radial-gradient(ellipse 45% 35% at 5% 55%, rgba(0, 194, 255, 0.16), transparent 65%),
+      linear-gradient(180deg, #061722 0%, #020910 48%, #02070d 100%);
   }
 
   ::selection {
-    @apply bg-accent-500/40 text-white;
+    @apply bg-neon-blue/40 text-white;
   }
 
   ::-webkit-scrollbar {
     width: 8px;
   }
+
   ::-webkit-scrollbar-track {
     @apply bg-dark-900;
   }
+
   ::-webkit-scrollbar-thumb {
-    @apply bg-accent-600 rounded-full;
+    @apply rounded-full bg-neon-blue;
   }
+
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-accent-500;
+    @apply bg-cyan-300;
   }
 }
 
 @layer components {
-  /* ── Glass Card ──────────────────────────────────────── */
   .glass-card {
-    @apply relative bg-white/[0.03] backdrop-blur-xl border border-white/[0.06]
-           rounded-2xl shadow-2xl shadow-black/20
+    @apply relative rounded-3xl border border-cyan-300/10 bg-slate-950/55
+           shadow-2xl shadow-cyan-950/30 backdrop-blur-xl
            transition-all duration-500 ease-out;
   }
+
   .glass-card:hover {
-    @apply bg-white/[0.06] border-white/[0.12] shadow-accent-500/10;
-    transform: translateY(-4px);
+    @apply border-cyan-300/20 bg-slate-950/70 shadow-cyan-500/10;
+    transform: translateY(-3px);
   }
 
-  /* ── Gradient Text ───────────────────────────────────── */
   .gradient-text {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #7c3aed 0%, #ec4899 50%, #00d4ff 100%);
+    background-image: linear-gradient(135deg, #e8f7ff 0%, #15bfff 45%, #0a7fb1 100%);
   }
 
   .gradient-text-subtle {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, #c4b5fd 0%, #f9a8d4 100%);
+    background-image: linear-gradient(135deg, #9eeaff 0%, #f8fdff 100%);
   }
 
-  /* ── Accent Line ─────────────────────────────────────── */
   .accent-line {
     @apply h-[2px] rounded-full;
-    background: linear-gradient(90deg, transparent, #7c3aed, #ec4899, transparent);
+    background: linear-gradient(90deg, transparent, #06b6d4, #38bdf8, transparent);
   }
 
-  /* ── Glow Button ─────────────────────────────────────── */
   .glow-button {
-    @apply relative px-8 py-3.5 rounded-xl font-semibold text-white
-           bg-gradient-to-r from-accent-500 via-pink-500 to-neon-blue
-           bg-[length:200%_200%] animate-gradient-x
-           shadow-lg shadow-accent-500/25
-           transition-all duration-300 ease-out;
+    @apply relative rounded-md bg-cyan-400 px-8 py-3.5 font-bold text-slate-950
+           shadow-lg shadow-cyan-500/25 transition-all duration-300 ease-out;
   }
+
   .glow-button:hover {
-    @apply shadow-xl shadow-accent-500/40 scale-[1.03];
+    @apply scale-[1.03] bg-cyan-300 shadow-xl shadow-cyan-400/40;
   }
+
   .glow-button:active {
     @apply scale-[0.98];
   }
 
-  /* ── Outline Button ──────────────────────────────────── */
   .outline-button {
-    @apply relative px-8 py-3.5 rounded-xl font-semibold text-white
-           border border-accent-500/40 bg-transparent
-           transition-all duration-300 ease-out;
+    @apply relative rounded-md border border-cyan-400/50 bg-transparent px-8 py-3.5
+           font-bold text-cyan-300 transition-all duration-300 ease-out;
   }
+
   .outline-button:hover {
-    @apply border-accent-400 bg-accent-500/10 shadow-lg shadow-accent-500/10;
+    @apply border-cyan-300 bg-cyan-400/10 text-cyan-100 shadow-lg shadow-cyan-500/10;
   }
 
-  /* ── Section ─────────────────────────────────────────── */
   .section-container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32;
+    @apply mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28;
   }
 
-  /* ── Floating Orbs ───────────────────────────────────── */
   .floating-orb {
-    @apply absolute rounded-full blur-3xl opacity-20 pointer-events-none;
+    @apply pointer-events-none absolute rounded-full opacity-20 blur-3xl;
+  }
+
+  .portfolio-shell {
+    @apply relative mx-auto w-[min(1120px,calc(100%-32px))] overflow-hidden rounded-[2rem]
+           border border-cyan-300/10 bg-[#06131d]/90 shadow-2xl shadow-cyan-950/50;
   }
 }
 

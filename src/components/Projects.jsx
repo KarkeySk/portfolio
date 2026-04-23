@@ -5,57 +5,57 @@ import AnimatedSection, { fadeUp } from './ui/AnimatedSection';
 
 const projects = [
   {
-    title: 'NexusAI Platform',
-    description: 'A cutting-edge AI-powered SaaS platform with real-time analytics, team collaboration, and automated workflows. Built for scale.',
-    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=500&fit=crop',
-    tags: ['React', 'Node.js', 'PostgreSQL', 'OpenAI', 'eSewa'],
+    title: 'Vehicle Rental System',
+    description: 'A college coursework project for managing vehicle listings, bookings, customer records, and rental workflow operations.',
+    image: 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=800&h=500&fit=crop',
+    tags: ['Java', 'OOP', 'Database', 'Coursework'],
     github: 'https://github.com/KarkeySk/portfolio',
-    live: 'https://example.com',
+    live: 'https://github.com/KarkeySk',
     featured: true,
   },
   {
-    title: 'CryptoVault Dashboard',
-    description: 'Real-time cryptocurrency portfolio tracker with advanced charting, price alerts, and multi-wallet support.',
-    image: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&h=500&fit=crop',
-    tags: ['Next.js', 'TypeScript', 'WebSocket', 'TradingView'],
+    title: 'Inventory Management System',
+    description: 'A semester project focused on tracking products, stock levels, sales records, and inventory updates for small businesses.',
+    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&h=500&fit=crop',
+    tags: ['React', 'Database', 'CRUD', 'Semester Project'],
     github: 'https://github.com/KarkeySk/portfolio',
-    live: 'https://example.com',
+    live: 'https://github.com/KarkeySk',
     featured: true,
   },
   {
-    title: 'Artisan E-Commerce',
-    description: 'Premium e-commerce platform with 3D product visualization, AR try-on, and intelligent recommendations.',
-    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=500&fit=crop',
-    tags: ['React', 'Three.js', 'eSewa', 'Supabase'],
+    title: 'Bhatbhatify Web App',
+    description: 'A sprint-based college project inspired by retail shopping workflows, including planning, reporting, and web app implementation.',
+    image: 'https://images.unsplash.com/photo-1556742044-3c52d6e88c62?w=800&h=500&fit=crop',
+    tags: ['React', 'Supabase', 'Report', 'Sprint Project'],
     github: 'https://github.com/KarkeySk/portfolio',
-    live: 'https://example.com',
+    live: 'https://github.com/KarkeySk',
+    featured: true,
+  },
+  {
+    title: 'Weather App',
+    description: 'A frontend college practice project that displays weather information with a clean interface and responsive layout.',
+    image: 'https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=800&h=500&fit=crop',
+    tags: ['HTML', 'CSS', 'JavaScript', 'API'],
+    github: 'https://github.com/KarkeySk/portfolio',
+    live: 'https://github.com/KarkeySk',
     featured: false,
   },
   {
-    title: 'HealthSync App',
-    description: 'Comprehensive health & fitness tracking app with wearable integrations, meal planning, and AI coaching.',
-    image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&h=500&fit=crop',
-    tags: ['React Native', 'Firebase', 'ML Kit', 'Node.js'],
+    title: 'Recipe Finder Web Application',
+    description: 'A web development assignment for searching recipes, presenting results, and practicing user-friendly UI structure.',
+    image: 'https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=800&h=500&fit=crop',
+    tags: ['HTML', 'CSS', 'JavaScript', 'Assignment'],
     github: 'https://github.com/KarkeySk/portfolio',
-    live: 'https://example.com',
+    live: 'https://github.com/KarkeySk',
     featured: false,
   },
   {
-    title: 'DevCollab IDE',
-    description: 'Browser-based collaborative code editor with real-time multi-cursor editing, terminal, and Git integration.',
-    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=500&fit=crop',
-    tags: ['Next.js', 'WebRTC', 'Monaco', 'Docker'],
+    title: 'Banking Application',
+    description: 'An object-oriented programming college project for basic account handling, transactions, and banking operations.',
+    image: 'https://images.unsplash.com/photo-1601597111158-2fceff292cdc?w=800&h=500&fit=crop',
+    tags: ['Java', 'OOP', 'File Handling', 'College Project'],
     github: 'https://github.com/KarkeySk/portfolio',
-    live: 'https://example.com',
-    featured: false,
-  },
-  {
-    title: 'AutoFlow CRM',
-    description: 'Intelligent CRM with automated lead scoring, pipeline management, email sequences, and reporting dashboards.',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop',
-    tags: ['Vue.js', 'Django', 'Celery', 'Redis'],
-    github: 'https://github.com/KarkeySk/portfolio',
-    live: 'https://example.com',
+    live: 'https://github.com/KarkeySk',
     featured: false,
   },
 ];
@@ -157,7 +157,7 @@ export default function Projects() {
         <SectionHeading
           label="Portfolio"
           title="Featured Projects"
-          description="A curated selection of projects that showcase my expertise in full-stack development."
+          description="College coursework and semester projects that show my learning journey across web development, OOP, databases, and practical software systems."
         />
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">

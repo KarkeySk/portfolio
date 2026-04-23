@@ -1,145 +1,111 @@
 import { motion } from 'framer-motion';
-import { ArrowDown, Github, Linkedin, Twitter, Sparkles } from 'lucide-react';
+import { Facebook, Github, Linkedin } from 'lucide-react';
 import GradientButton from './ui/GradientButton';
+
+const socialLinks = [
+  { icon: Facebook, href: 'https://facebook.com', label: 'Facebook' },
+  { icon: Github, href: 'https://github.com/KarkeySk/portfolio', label: 'GitHub' },
+  { icon: Linkedin, href: 'https://www.linkedin.com/in/swornim-karki-782362405', label: 'LinkedIn' },
+];
 
 export default function Hero() {
   return (
-    <section
-      id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-    >
-      {/* ── Ambient Background ─────────────────────────── */}
+    <section id="hero" className="relative flex min-h-screen items-center justify-center overflow-hidden px-0 py-24">
       <div className="absolute inset-0 -z-10">
-        {/* Large gradient orbs */}
-        <div className="floating-orb w-[600px] h-[600px] bg-accent-500 top-[-10%] left-[-10%] animate-float" />
-        <div className="floating-orb w-[500px] h-[500px] bg-pink-500 bottom-[-15%] right-[-10%] animate-float-delayed" />
-        <div className="floating-orb w-[300px] h-[300px] bg-neon-blue top-[20%] right-[15%] opacity-10 animate-pulse-slow" />
-
-        {/* Grid overlay */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-            backgroundSize: '60px 60px',
-          }}
-        />
+        <div className="floating-orb bottom-[-12rem] left-1/2 h-[34rem] w-[70rem] -translate-x-1/2 bg-cyan-400/40" />
+        <div className="floating-orb left-[-12rem] top-1/3 h-[28rem] w-[28rem] bg-cyan-500/20" />
       </div>
 
-      <div className="section-container text-center relative z-10">
-        {/* Status badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 30, scale: 0.9 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="inline-flex items-center gap-2 px-5 py-2 mb-8 rounded-full
-                     bg-accent-500/10 border border-accent-500/20 text-accent-300"
-        >
-          <span className="relative flex h-2.5 w-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-400" />
-          </span>
-          <span className="text-sm font-medium">CS Student &middot; Available for freelance work</span>
-        </motion.div>
+      <div className="portfolio-shell min-h-[620px]">
+        <div className="absolute inset-y-0 right-0 hidden w-[52%] lg:block">
+          <div
+            className="absolute inset-0 bg-cover bg-center opacity-55 grayscale"
+            style={{
+              backgroundImage:
+                "url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=900&h=900&fit=crop&crop=faces')",
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#06131d] via-[#06131d]/35 to-[#06131d]/10" />
+          <div className="absolute inset-0 bg-cyan-500/15 mix-blend-screen" />
+          <div className="absolute left-[24%] top-[22%] h-36 w-20 rotate-[17deg] rounded-full bg-cyan-400/45 blur-lg" />
+          <div className="absolute left-[33%] top-[17%] h-32 w-3 rotate-[18deg] rounded-full bg-cyan-300/70 blur-[2px]" />
+          <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#06131d] to-transparent" />
+        </div>
 
-        {/* Main heading */}
-        <motion.h1
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl
-                     font-display font-extrabold leading-[1.05] mb-6"
-        >
-          <span className="text-white">Hi, I'm </span>
-          <span className="gradient-text">Swornim</span>
-          <br />
-          <span className="gradient-text">Karki</span>
-          <span className="text-white"> — I Build</span>
-          <br />
-          <span className="text-white">The </span>
-          <span className="gradient-text">Future</span>
-          <motion.span
-            initial={{ opacity: 0, rotate: -10 }}
-            animate={{ opacity: 1, rotate: 0 }}
-            transition={{ delay: 1.2, duration: 0.5, type: 'spring' }}
-            className="inline-block ml-2"
-          >
-            <Sparkles className="w-8 h-8 lg:w-12 lg:h-12 text-accent-400 inline" />
-          </motion.span>
-        </motion.h1>
-
-        {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.7 }}
-          className="max-w-2xl mx-auto text-lg sm:text-xl text-gray-400 leading-relaxed mb-10"
-        >
-          Computer Science student & aspiring full-stack developer passionate about crafting
-          performant, scalable, and visually stunning web applications. Turning ideas into reality.
-        </motion.p>
-
-        {/* CTA Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.9 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14"
-        >
-          <GradientButton href="#projects" variant="primary" size="lg">
-            View My Work
-          </GradientButton>
-          <GradientButton href="#contact" variant="outline" size="lg">
-            Let's Talk
-          </GradientButton>
-        </motion.div>
-
-        {/* Social links */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.7, delay: 1.1 }}
-          className="flex items-center justify-center gap-4"
-        >
-          {[
-            { icon: Github, href: 'https://github.com/KarkeySk/portfolio', label: 'GitHub' },
-            { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
-            { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
-          ].map(({ icon: Icon, href, label }) => (
-            <motion.a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ y: -3, scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.06]
-                       text-gray-400 hover:text-white hover:bg-white/[0.08]
-                       hover:border-accent-500/30 transition-all duration-300"
-              aria-label={label}
+        <div className="relative z-10 flex min-h-[620px] items-center px-8 pb-12 pt-24 sm:px-16 lg:w-[58%] lg:px-24 lg:pt-20">
+          <div className="max-w-xl">
+            <motion.p
+              initial={{ opacity: 0, y: 22 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="mb-5 text-sm font-bold uppercase tracking-[0.35em] text-cyan-300/80"
             >
-              <Icon className="w-5 h-5" />
-            </motion.a>
-          ))}
-        </motion.div>
+              Portfolio
+            </motion.p>
 
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        >
-          <motion.a
-            href="#about"
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            className="flex flex-col items-center gap-2 text-gray-500 hover:text-accent-400 transition-colors"
-          >
-            <span className="text-xs font-medium tracking-widest uppercase">Scroll</span>
-            <ArrowDown className="w-4 h-4" />
-          </motion.a>
-        </motion.div>
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.75, delay: 0.2 }}
+              className="text-4xl font-display font-extrabold leading-tight tracking-wide text-white sm:text-5xl lg:text-6xl"
+            >
+              Hi, I&apos;m Swornim Karki
+            </motion.h1>
+
+            <motion.h2
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.35 }}
+              className="mt-3 text-2xl font-display font-extrabold text-cyan-400 sm:text-3xl"
+            >
+              Frontend Developer
+            </motion.h2>
+
+            <motion.p
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.5 }}
+              className="mt-7 max-w-lg text-base font-medium leading-7 text-white/80"
+            >
+              Computer Science student building clean, responsive, and practical web applications.
+              I enjoy turning college projects and client ideas into polished digital experiences.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.65 }}
+              className="mt-9 flex flex-col gap-4 sm:flex-row"
+            >
+              <GradientButton href="#contact" variant="primary" size="md">
+                Hire Me
+              </GradientButton>
+              <GradientButton href="#contact" variant="outline" size="md">
+                Let&apos;s Talk
+              </GradientButton>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.7, delay: 0.85 }}
+              className="mt-24 flex items-center gap-5"
+            >
+              {socialLinks.map(({ icon: Icon, href, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-cyan-400/45 text-cyan-400 transition-all duration-300 hover:-translate-y-1 hover:bg-cyan-400 hover:text-slate-950 hover:shadow-lg hover:shadow-cyan-400/30"
+                >
+                  <Icon className="h-4 w-4" />
+                </a>
+              ))}
+            </motion.div>
+          </div>
+        </div>
       </div>
     </section>
   );
